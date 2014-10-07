@@ -1,0 +1,13 @@
+{application, markhor,
+ [
+  {description, "OpenRTB router in Erlang"},
+  {vsn, "semver"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { markhor_app, []}},
+  {env, [{http_port, 5544}]},
+  {env, []}
+ ]}.
