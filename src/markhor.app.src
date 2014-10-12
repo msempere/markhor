@@ -1,6 +1,6 @@
 {application, markhor,
  [
-  {description, "OpenRTB router in Erlang"},
+  {description, "OpenRTB server in Erlang"},
   {vsn, "semver"},
   {registered, []},
   {applications, [

@@ -1,4 +1,4 @@
 Markhor
 =======
 
-OpenRTB router in Erlang
+OpenRTB server in Erlang
