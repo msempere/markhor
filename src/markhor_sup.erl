@@ -24,6 +24,5 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    loger:info("Markhor OTP Supervisor started"),
     {ok, { {one_for_one, 5, 10}, []} }.
 
