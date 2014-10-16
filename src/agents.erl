@@ -1,6 +1,6 @@
 -module(agents).
 -author("msempere").
--export([add_agent/2]).
+-export([add_agent/2, add_creative/3]).
 
 -record(creative,{width,
                   height}).
