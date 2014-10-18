@@ -17,7 +17,7 @@ start() ->
 routes() ->
     [
          {'_', [
-                {"/", message_handler, []}
+                {"/", markhor_message_handler, []}
                ]
          }
     ]
