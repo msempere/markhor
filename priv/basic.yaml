@@ -1,0 +1,12 @@
+# basic.yaml
+
+name:       basic_agent
+bid_price:  0.1
+iurl:       http://localhots/preview/
+
+creatives:
+    -   id:         0
+        format:     325x50
+        adid:       basic_agent_325x50
+        adomain:    basic_agent.com
+        nurl:       http://localhost/creatives/basic_agent/325x50?winPrice=${AUCTION_PRICE}
