@@ -1,4 +1,4 @@
--module(message_handler).
+-module(markhor_message_handler).
 
 -export([init/3
         , allowed_methods/2
@@ -8,13 +8,27 @@
         , rest_init/2
         ]).
 
-
 %% Init
 init(_Transport, _Req, []) ->
     {upgrade, protocol, cowboy_rest}.
 
+
 rest_init(Req, []) ->
-    {ok, Req, [{"hola"}]}.
+    %% two test agents are inserted initially
+    Agents = [
+              agent:new(0, 
+                        agent1, 
+                        0.1,
+                        [creative:new(0, {250, 300})]
+                       ),
+
+              agent:new(1, 
+                        agent2,
+                        0.2,
+                        [creative:new(0, {250, 300})]
+                       )
+             ],
+    {ok, Req, Agents}.
 
 
 allowed_methods(Req, State) ->
@@ -33,10 +47,10 @@ terminate(_Reason, _Req, _State) ->
 
 
 handle_message(Body, State) ->
-    case json:parse(Body) of
+    case markhor_json:parse(Body) of
         {success, Json} -> 
             %%Id = proplists:get_value(<<"id">>, Json); 
-            bid_handler:message_handler(Json, State);
+            markhor_bid_request:message_handler(Json, State);
         {error, Msg} -> io:fwrite("~p~n",[Msg])
     end.
 
@@ -48,7 +62,9 @@ handle_incomming_message(Req, State) ->
     case cowboy_req:has_body(Req) of
         true ->
             {ok, Body, Req2} = cowboy_req:body(Req),
+
             spawn(fun() -> handle_message(Body, State) end),
+
             {ok, Req3 } = cowboy_req:reply(200, [{<<"Content-Type">>, <<"application/json">>}, {<<"x-openrtb-version">>,<<"2.1">>}], "{\"message\" :\"received bid request\", \"status\" : \"success\" }", Req2 ),
             {halt, Req3, State};
         false ->

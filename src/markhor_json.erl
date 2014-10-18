@@ -1,4 +1,4 @@
--module(json).
+-module(markhor_json).
 -author("msempere").
 -export([parse/1]).
 
@@ -10,5 +10,5 @@ parse(RawMessage) ->
 
 do_parse_json(JsonMessage) ->
   Message = jsx:decode(JsonMessage),
-  io:fwrite("Parsed json: ~tp~n", [Message]),
+  %%io:fwrite("Parsed json: ~tp~n", [Message]),
   Message.
