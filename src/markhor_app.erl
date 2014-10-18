@@ -12,10 +12,9 @@
 %% Application callbacks
 %% ===================================================================
 start(_StartType, _StartArgs) ->
+    markhor_config:load("basic.yaml"),
     ok = markhor_cowboy:start(),
     markhor_sup:start_link().
-
-
 
 url_mapper(Version, Verb) ->
     string:join(["/v",Version,"/",Verb ],"") 
