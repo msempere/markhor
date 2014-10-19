@@ -17,7 +17,8 @@ start() ->
 routes() ->
     [
          {'_', [
-                {"/", markhor_message_handler, []}
+                {"/bid_request", markhor_message_handler, []},
+                {"/agent/:agent_name", markhor_message_handler,[]}
                ]
          }
     ]
