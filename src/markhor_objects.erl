@@ -1,7 +1,7 @@
 -module(markhor_objects).
 -author("msempere").
 -export_type([agent/0, creative/0]).
--export([new_agent/4, new_creative/6, handle_agent_message/3]).
+-export([new_agent/4, new_creative/6, yaml_to_agent/1, agent_in_list/2]).
 
 
 -record(creative_object, {
@@ -68,8 +68,9 @@ yaml_to_agent(FileContent) ->
     new_agent(Name, BidPrice, Iurl, CS).
 
 
-handle_agent_message(AgentName, FileContent, Agents) ->
-    Agent = yaml_to_agent(FileContent),
-    %%io:fwrite("Generated Agent ~p~n", [Agent]),
-    [Agent | Agents].
+agent_in_list(#agent_object{name=Name}, List) ->
+    case lists:flatlength(List) of
+        0 -> false;
+        _ -> lists:keyfind(Name, 1, List)
+    end.
 
