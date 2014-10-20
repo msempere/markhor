@@ -6,7 +6,16 @@ iurl:       http://localhots/preview/
 
 creatives:
     -   id:         0
-        format:     325x50
+        width:      325
+        height:     50
         adid:       basic_agent_325x50
         adomain:    basic_agent.com
         nurl:       http://localhost/creatives/basic_agent/325x50?winPrice=${AUCTION_PRICE}
+
+    -   id:         1
+        width:      90
+        height:     90
+        format:     90x90
+        adid:       basic_agent_90x90
+        adomain:    basic_agent.com
+        nurl:       http://localhost/creatives/basic_agent/90x90?winPrice=${AUCTION_PRICE}
