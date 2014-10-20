@@ -10,4 +10,10 @@ load(Filename) ->
     parse_file(File).
 
 parse_file(File) ->
-    yamerl_constr:file(File).
+    case catch yamerl_constr:file(File) of
+        [Cfg] ->
+            Cfg;
+        _Err -> 
+            io:format("File failed to consult ~p~n", [_Err]),
+            false
+    end.
