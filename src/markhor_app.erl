@@ -6,18 +6,19 @@
 -define(C_ACCEPTORS,  100).
 
 %% Application callbacks
--export([start/2, stop/1, url_mapper/2]).
+-export([start/2, stop/1]).
 
 %% ===================================================================
 %% Application callbacks
 %% ===================================================================
 start(_StartType, _StartArgs) ->
     ok = markhor_cowboy:start(),
+    
+    %% started router. Name is registered as "router"
+    register(router, spawn_link(markhor_router, init, [])),
+
     markhor_sup:start_link().
 
-url_mapper(Version, Verb) ->
-    string:join(["/v",Version,"/",Verb ],"") 
-.
 
 stop(_State) ->
     ok.
