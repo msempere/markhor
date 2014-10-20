@@ -52,18 +52,16 @@ handle_post_message(Body, State) ->
 handle_get_message(Agent, State) ->
     AgentName = binary_to_list(Agent),
     FileContent = markhor_config:load(string:concat(AgentName, ".yaml")),
-    agent:handle_agent_message(AgentName, FileContent, State).
+    markhor_objects:handle_agent_message(AgentName, FileContent, State).
 
 
 %% API
 handle_incomming_get_message(Req, State) ->
     {Agent_name, Req1} = cowboy_req:binding(agent_name, Req),
     io:fwrite("Received petition for Agent ~p~n", [Agent_name]),
-
-    spawn(fun () -> handle_get_message(Agent_name, State) end),
-
+    NewState = handle_get_message(Agent_name, State),
     {ok, Req2} = cowboy_req:reply(200, Req),
-    {halt, Req2, State}.
+    {halt, Req2, NewState}.
 
 
 handle_incomming_post_message(Req, State) ->
