@@ -1,11 +1,12 @@
 -module(markhor_bid_request).
--export([message_handler/2]).
+-export([message_handler/1]).
 
-message_handler(Json, State) ->
+message_handler(Json) ->
     Imp = proplists:get_value(<<"imp">>, Json),
     Height = proplists:get_value(<<"h">>, proplists:get_value(<<"banner">>, hd(Imp))),
     Wight = proplists:get_value(<<"w">>, proplists:get_value(<<"banner">>, hd(Imp))),
-    %%io:fwrite("~p~n",[get_id(hd(State), {Height, Wight})]),
+    Ref = make_ref(),
+    router ! {self(), Ref, bid_request},
     ok.
 
 
