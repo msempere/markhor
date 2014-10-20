@@ -52,7 +52,7 @@ handle_post_message(Body, State) ->
 handle_get_message(Agent, State) ->
     AgentName = binary_to_list(Agent),
     FileContent = markhor_config:load(string:concat(AgentName, ".yaml")),
-    markhor_objects:handle_agent_message(AgentName, FileContent, State).
+    markhor_agent_request:message_handler(AgentName, FileContent).
 
 
 %% API
