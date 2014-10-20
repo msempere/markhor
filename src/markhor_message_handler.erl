@@ -44,7 +44,7 @@ handle_post_message(Body, State) ->
     case markhor_json:parse(Body) of
         {success, Json} -> 
             %%Id = proplists:get_value(<<"id">>, Json); 
-            markhor_bid_request:message_handler(Json, State);
+            markhor_bid_request:message_handler(Json);
         {error, Msg} -> io:fwrite("~p~n",[Msg])
     end.
 
