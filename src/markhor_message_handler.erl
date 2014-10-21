@@ -70,9 +70,13 @@ handle_incomming_post_message(Req, State) ->
         true ->
             {ok, Body, Req3} = cowboy_req:body(Req),
 
-            handle_post_message(Body, State),
-
-            {ok, Req4 } = cowboy_req:reply(200, [{<<"Content-Type">>, <<"application/json">>}, {<<"x-openrtb-version">>,<<"2.1">>}], "{\"message\" :\"received bid request\", \"status\" : \"success\" }", Req3 ),
+            Response = handle_post_message(Body, State),
+            case Response of
+                {_} ->
+                    {ok, Req4} = cowboy_req:reply(200, [{<<"Content-Type">>, <<"application/json">>}, {<<"x-openrtb-version">>,<<"2.1">>}], "{}", Req3 );
+                {bid_price, Price} ->
+                    {ok, Req4 } = cowboy_req:reply(200, [{<<"Content-Type">>, <<"application/json">>}, {<<"x-openrtb-version">>,<<"2.1">>}], string:concat(string:concat("{\"message\" : ", float_to_list(Price, [{decimals, 3}])), "}"), Req3 )
+            end,
             {halt, Req4, State};
         false ->
             {false, Req, State}
