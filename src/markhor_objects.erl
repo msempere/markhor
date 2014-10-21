@@ -1,7 +1,7 @@
 -module(markhor_objects).
 -author("msempere").
 -export_type([agent/0, creative/0]).
--export([new_agent/4, new_creative/6, yaml_to_agent/1, agent_in_list/2]).
+-export([new_agent/4, new_creative/6, yaml_to_agent/1, agent_in_list/2, right_agents/3]).
 
 
 -record(creative_object, {
@@ -68,9 +68,29 @@ yaml_to_agent(FileContent) ->
     new_agent(Name, BidPrice, Iurl, CS).
 
 
-agent_in_list(#agent_object{name=Name}, List) ->
-    case lists:flatlength(List) of
-        0 -> false;
-        _ -> lists:keyfind(Name, 1, List)
+%% get agents that have the correct creatives
+right_agents([], _, _) ->
+    [];
+
+right_agents(Agents, Height, Width) ->
+    lists:keysort(1, [{Agent#agent_object.bidprice, hd(Creatives)} || Agent <- Agents, length(Creatives=get_right_creatives(Agent#agent_object.creatives, Height, Width)) > 0]).
+
+
+%% get agent's creatives that have the correct format
+get_right_creatives([], _, _) ->
+    [];
+
+get_right_creatives(Creatives, Height, Width) ->
+    [Creative || Creative <- Creatives, Creative#creative_object.height == Height, Creative#creative_object.width == Width].
+
+
+agent_in_list(_, []) ->
+    false;
+
+agent_in_list(AgentName, List) ->
+    case lists:keyfind(AgentName, 2, List) of
+         false -> false;
+         _ -> true
     end.
+
 
