@@ -1,16 +1,16 @@
 # basic.yaml
 
-name:       basic_agent
+name:       basic
 bid_price:  0.1
 iurl:       http://localhots/preview/
 
 creatives:
     -   id:         0
-        width:      325
-        height:     50
-        adid:       basic_agent_325x50
+        width:      300
+        height:     250
+        adid:       basic_agent_300x250
         adomain:    basic_agent.com
-        nurl:       http://localhost/creatives/basic_agent/325x50?winPrice=${AUCTION_PRICE}
+        nurl:       http://localhost/creatives/basic_agent/300x250?winPrice=${AUCTION_PRICE}
 
     -   id:         1
         width:      90

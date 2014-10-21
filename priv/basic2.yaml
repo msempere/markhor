@@ -1,0 +1,21 @@
+# basic2.yaml
+
+name:       basic2
+bid_price:  0.3
+iurl:       http://localhots/preview/
+
+creatives:
+    -   id:         0
+        width:      300
+        height:     250
+        adid:       basic2_agent_300x250
+        adomain:    basic2_agent.com
+        nurl:       http://localhost/creatives/basic2_agent/300x250?winPrice=${AUCTION_PRICE}
+
+    -   id:         1
+        width:      90
+        height:     90
+        format:     90x90
+        adid:       basic2_agent_90x90
+        adomain:    basic2_agent.com
+        nurl:       http://localhost/creatives/basic2_agent/90x90?winPrice=${AUCTION_PRICE}

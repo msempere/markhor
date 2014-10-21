@@ -1,0 +1,21 @@
+# basic3.yaml
+
+name:       basic3
+bid_price:  0.2
+iurl:       http://localhots/preview/
+
+creatives:
+    -   id:         0
+        width:      300
+        height:     250
+        adid:       basic3_agent_300x250
+        adomain:    basic3_agent.com
+        nurl:       http://localhost/creatives/basic3_agent/300x250?winPrice=${AUCTION_PRICE}
+
+    -   id:         1
+        width:      90
+        height:     90
+        format:     90x90
+        adid:       basic3_agent_90x90
+        adomain:    basic3_agent.com
+        nurl:       http://localhost/creatives/basic3_agent/90x90?winPrice=${AUCTION_PRICE}
