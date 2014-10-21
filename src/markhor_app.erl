@@ -15,6 +15,7 @@ start(_StartType, _StartArgs) ->
     ok = markhor_cowboy:start(),
     
     %% started router. Name is registered as "router"
+    process_flag(trap_exit, true),
     register(router, spawn_link(markhor_router, init, [])),
 
     markhor_sup:start_link().
