@@ -3,10 +3,9 @@
 -export([message_handler/2]).
 
 message_handler(AgentName, FileContent) ->
-    Agent = markhor_objects:yaml_to_agent(FileContent),
 
     Ref = make_ref(),
-    router ! {self(), Ref, agent, Agent},
+    router ! {self(), Ref, agent, AgentName, FileContent},
     receive 
         {Ref, Message} ->
             io:fwrite("Response from the router: ~p~n",[Message])
