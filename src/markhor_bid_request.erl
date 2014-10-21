@@ -2,19 +2,20 @@
 -export([message_handler/1]).
 
 message_handler(Json) ->
-    Imp = proplists:get_value(<<"imp">>, Json),
-    Height = proplists:get_value(<<"h">>, proplists:get_value(<<"banner">>, hd(Imp))),
-    Wight = proplists:get_value(<<"w">>, proplists:get_value(<<"banner">>, hd(Imp))),
     Ref = make_ref(),
     router ! {self(), Ref, bid_request, Json},
     receive 
-        {Ref, Message} ->
-            io:fwrite("Response from the router: ~p~n",[Message])
+        {_, bid_price, Price} ->
+            {bid_price, Price};
+
+        {_, no_auctions} ->
+            io:fwrite("There were no auction~n"),
+            {no_auction}
     after 
-        1000 -> 
-            io:fwrite("Lost bid request~n")
-    end,
-    ok.
+        2000 -> 
+            io:fwrite("Lost bid request~n"),
+            {no_auction}
+    end.
 
 
 %%get_id(#agent{creatives = Creatives}, Key) ->
