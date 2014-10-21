@@ -1,4 +1,5 @@
 -module(markhor_bid_request).
+-compile([{parse_transform, lager_transform}]).
 -export([message_handler/1]).
 
 message_handler(Json) ->
@@ -9,18 +10,11 @@ message_handler(Json) ->
             {bid_price, Price};
 
         {_, no_auctions} ->
-            io:fwrite("There were no auction~n"),
+            lager:info("There were no auction for the received bid request~n"),
             {no_auction}
     after 
-        2000 -> 
-            io:fwrite("Lost bid request~n"),
+        1000 -> 
+            lager:info("Timeout waiting for bid price~n"),
             {no_auction}
     end.
-
-
-%%get_id(#agent{creatives = Creatives}, Key) ->
-%%    case lists:keyfind(Key, 3, Creatives) of
-%%        {_, Id, _} -> {ok, Id};
-%%        false   -> false
-%%    end.
 

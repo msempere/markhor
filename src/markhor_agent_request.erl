@@ -1,4 +1,5 @@
 -module(markhor_agent_request).
+-compile([{parse_transform, lager_transform}]).
 -author(msempere).
 -export([message_handler/2]).
 
@@ -7,10 +8,10 @@ message_handler(AgentName, FileContent) ->
     Ref = make_ref(),
     router ! {self(), Ref, agent, AgentName, FileContent},
     receive 
-        {Ref, Message} ->
-            io:fwrite("Response from the router: ~p~n",[Message])
+        {Ref, ok_agent} ->
+            lager:info("Petition for creating agent ~p received correctly~n", [AgentName])
     after 
         1000 -> 
-            io:fwrite("Lost agent request~n")
+            lager:info("Timeout while waiting for the agent creating reponse back~n")
     end,
     ok.
